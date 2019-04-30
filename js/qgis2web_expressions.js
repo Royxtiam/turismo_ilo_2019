@@ -754,3 +754,17 @@ function fnc__specialcol_(values, context) {
 function fnc_project_color(values, context) {
     return false;
 };
+
+
+
+function label_LUGARESDEINTERES_3_eval_expression(context) {
+    // concat(RUBRO, '  ', DESCRIP)
+
+    var feature = context.feature;
+    
+    if (feature.properties) {
+        return fnc_concat([feature.properties['RUBRO'] ,'  ',feature.properties['DESCRIP'] ], context);
+    } else {
+        return fnc_concat([feature['RUBRO'] ,'  ',feature['DESCRIP'] ], context);
+    }
+}

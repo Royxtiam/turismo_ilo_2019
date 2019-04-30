@@ -10,17 +10,16 @@
         <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
 
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css">
-        
+   
         <style>
         #map {
-            width: 100%;
+             width: 100%;
             height: 500px;
         }
         </style>
         <title>Pagina de Turismo ILO</title>
     </head>
     <body>
-        
         <div id="map">
         </div>
         <script src="js/qgis2web_expressions.js"></script>
@@ -33,10 +32,11 @@
         <script src="js/labelgun.min.js"></script>
         <script src="js/labels.js"></script>
         <script src="data/dpto_moquegua_0.js"></script>
-        <script src="data/PROVINCIA_ILO_1.js"></script>
-        <script src="data/DIST_ILO_2.js"></script>
-        <script src="data/via_ferrea_3.js"></script>
-        <script src="data/PTOSTURISTICOS_4.js"></script>
+        <script src="data/DIST_ILO_1.js"></script>
+        <script src="data/PLAYAS_2.js"></script>
+        <script src="data/LUGARESDEINTERES_3.js"></script>
+        <script src="data/HOSPEDAJE_4.js"></script>
+        <script src="data/ALIMENTACION_5.js"></script>
         <script>
         var highlightLayer;
         function highlightFeature(e) {
@@ -53,10 +53,11 @@
               });
             }
         }
- 
-     var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+
+        var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         osm = L.tileLayer(osmUrl, {maxZoom: 28, attribution: osmAttrib});
+
 
         var map = L.map('map', {
             zoomControl:true, maxZoom:28, minZoom:1
@@ -80,10 +81,10 @@
                 mouseover: highlightFeature,
             });
             var popupContent = '<table>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['AREA'] !== null ? Autolinker.link(String(feature.properties['AREA'])) : '') + '</td>\
+                <tr>\
+                        <td colspan="2">' + (feature.properties['PROVINCIA'] !== null ? Autolinker.link(String(feature.properties['PROVINCIA'])) : '') + '</td>\
                     </tr>\
-                  </table>';
+                </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
@@ -98,7 +99,7 @@
                 weight: 1.0, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(61,204,48,0.1)',
+                fillColor: 'rgba(61,204,48,0.2)',
             }
         }
         map.createPane('pane_dpto_moquegua_0');
@@ -112,7 +113,7 @@
         });
         bounds_group.addLayer(layer_dpto_moquegua_0);
         map.addLayer(layer_dpto_moquegua_0);
-        function pop_PROVINCIA_ILO_1(feature, layer) {
+        function pop_DIST_ILO_1(feature, layer) {
             layer.on({
                 mouseout: function(e) {
                     for (i in e.target._eventParents) {
@@ -123,16 +124,17 @@
             });
             var popupContent = '<table>\
                     <tr>\
-                        <th scope="row">NOMBPROV</th>\
-                        <td>' + (feature.properties['NOMBPROV'] !== null ? Autolinker.link(String(feature.properties['NOMBPROV'])) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['NOMBDIST'] !== null ? Autolinker.link(String(feature.properties['NOMBDIST'])) : '') + '</td>\
                     </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_PROVINCIA_ILO_1_0() {
-            return {
-                pane: 'pane_PROVINCIA_ILO_1',
+        function style_DIST_ILO_1_0(feature) {
+            switch(String(feature.properties['NOMBDIST'])) {
+                case 'EL ALGARROBAL':
+                    return {
+                pane: 'pane_DIST_ILO_1',
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
@@ -141,63 +143,12 @@
                 weight: 1.0, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(243,166,178,0.1)',
-            }
-        }
-        map.createPane('pane_PROVINCIA_ILO_1');
-        map.getPane('pane_PROVINCIA_ILO_1').style.zIndex = 401;
-        map.getPane('pane_PROVINCIA_ILO_1').style['mix-blend-mode'] = 'normal';
-        var layer_PROVINCIA_ILO_1 = new L.geoJson(json_PROVINCIA_ILO_1, {
-            attribution: '',
-            pane: 'pane_PROVINCIA_ILO_1',
-            onEachFeature: pop_PROVINCIA_ILO_1,
-            style: style_PROVINCIA_ILO_1_0,
-        });
-        bounds_group.addLayer(layer_PROVINCIA_ILO_1);
-        map.addLayer(layer_PROVINCIA_ILO_1);
-        function pop_DIST_ILO_2(feature, layer) {
-            layer.on({
-                mouseout: function(e) {
-                    for (i in e.target._eventParents) {
-                        e.target._eventParents[i].resetStyle(e.target);
-                    }
-                },
-                mouseover: highlightFeature,
-            });
-            var popupContent = '<table>\
-                    <tr>\
-                        <th scope="row">NOMBDIST</th>\
-                        <td>' + (feature.properties['NOMBDIST'] !== null ? Autolinker.link(String(feature.properties['NOMBDIST'])) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2"><strong>NOMBPROV</strong><br />' + (feature.properties['NOMBPROV'] !== null ? Autolinker.link(String(feature.properties['NOMBPROV'])) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2"><strong>NOMBDEP</strong><br />' + (feature.properties['NOMBDEP'] !== null ? Autolinker.link(String(feature.properties['NOMBDEP'])) : '') + '</td>\
-                    </tr>\
-                </table>';
-            layer.bindPopup(popupContent, {maxHeight: 400});
-        }
-
-        function style_DIST_ILO_2_0(feature) {
-            switch(String(feature.properties['NOMBDIST'])) {
-                case 'EL ALGARROBAL':
-                    return {
-                pane: 'pane_DIST_ILO_2',
-                opacity: 1,
-                color: 'rgba(35,35,35,1)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(210,139,95,0.20)',
+                fillColor: 'rgba(210,139,95,0.2)',
             }
                     break;
                 case 'ILO':
                     return {
-                pane: 'pane_DIST_ILO_2',
+                pane: 'pane_DIST_ILO_1',
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
@@ -206,12 +157,12 @@
                 weight: 1.0, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(238,225,101,0.20)',
+                fillColor: 'rgba(238,225,101,0.2)',
             }
                     break;
                 case 'PACOCHA':
                     return {
-                pane: 'pane_DIST_ILO_2',
+                pane: 'pane_DIST_ILO_1',
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
@@ -223,34 +174,20 @@
                 fillColor: 'rgba(194,35,215,0.2)',
             }
                     break;
-                default:
-                    return {
-                pane: 'pane_DIST_ILO_2',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(121,228,107,0.2)',
-            }
-                    break;
             }
         }
-        map.createPane('pane_DIST_ILO_2');
-        map.getPane('pane_DIST_ILO_2').style.zIndex = 402;
-        map.getPane('pane_DIST_ILO_2').style['mix-blend-mode'] = 'normal';
-        var layer_DIST_ILO_2 = new L.geoJson(json_DIST_ILO_2, {
+        map.createPane('pane_DIST_ILO_1');
+        map.getPane('pane_DIST_ILO_1').style.zIndex = 401;
+        map.getPane('pane_DIST_ILO_1').style['mix-blend-mode'] = 'normal';
+        var layer_DIST_ILO_1 = new L.geoJson(json_DIST_ILO_1, {
             attribution: '',
-            pane: 'pane_DIST_ILO_2',
-            onEachFeature: pop_DIST_ILO_2,
-            style: style_DIST_ILO_2_0,
+            pane: 'pane_DIST_ILO_1',
+            onEachFeature: pop_DIST_ILO_1,
+            style: style_DIST_ILO_1_0,
         });
-        bounds_group.addLayer(layer_DIST_ILO_2);
-        map.addLayer(layer_DIST_ILO_2);
-        function pop_via_ferrea_3(feature, layer) {
+        bounds_group.addLayer(layer_DIST_ILO_1);
+        map.addLayer(layer_DIST_ILO_1);
+        function pop_PLAYAS_2(feature, layer) {
             layer.on({
                 mouseout: function(e) {
                     for (i in e.target._eventParents) {
@@ -260,37 +197,159 @@
                 mouseover: highlightFeature,
             });
             var popupContent = '<table>\
+                       <tr>\
+                        <th scope="row">RUBRO</th>\
+                        <td>' + (feature.properties['RUBRO'] !== null ? Autolinker.link(String(feature.properties['RUBRO'])) : '') + '</td>\
+                    </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['MAPKEY'] !== null ? Autolinker.link(String(feature.properties['MAPKEY'])) : '') + '</td>\
+                        <td colspan="2"><strong>DESCRIP</strong><br />' + (feature.properties['DESCRIP'] !== null ? Autolinker.link(String(feature.properties['DESCRIP'])) : '') + '</td>\
                     </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_via_ferrea_3_0() {
+        function style_PLAYAS_2_0() {
             return {
-                pane: 'pane_via_ferrea_3',
-                opacity: 1,
-                color: 'rgba(125,139,143,1.0)',
-                dashArray: '',
-                lineCap: 'square',
-                lineJoin: 'bevel',
-                weight: 1.0,
-                fillOpacity: 0,
+                pane: 'pane_PLAYAS_2',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/icono verde.svg',
+            iconSize: [76.0, 76.0]
+        }),
             }
         }
-        map.createPane('pane_via_ferrea_3');
-        map.getPane('pane_via_ferrea_3').style.zIndex = 403;
-        map.getPane('pane_via_ferrea_3').style['mix-blend-mode'] = 'normal';
-        var layer_via_ferrea_3 = new L.geoJson(json_via_ferrea_3, {
+        map.createPane('pane_PLAYAS_2');
+        map.getPane('pane_PLAYAS_2').style.zIndex = 402;
+        map.getPane('pane_PLAYAS_2').style['mix-blend-mode'] = 'normal';
+        var layer_PLAYAS_2 = new L.geoJson(json_PLAYAS_2, {
             attribution: '',
-            pane: 'pane_via_ferrea_3',
-            onEachFeature: pop_via_ferrea_3,
-            style: style_via_ferrea_3_0,
+            pane: 'pane_PLAYAS_2',
+            onEachFeature: pop_PLAYAS_2,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_PLAYAS_2_0(feature));
+            },
         });
-        bounds_group.addLayer(layer_via_ferrea_3);
-        map.addLayer(layer_via_ferrea_3);
-        function pop_PTOSTURISTICOS_4(feature, layer) {
+        bounds_group.addLayer(layer_PLAYAS_2);
+        map.addLayer(layer_PLAYAS_2);
+        function pop_LUGARESDEINTERES_3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                      <tr>\
+                        <th scope="row">RUBRO</th>\
+                        <td>' + (feature.properties['RUBRO'] !== null ? Autolinker.link(String(feature.properties['RUBRO'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>DESCRIP</strong><br />' + (feature.properties['DESCRIP'] !== null ? Autolinker.link(String(feature.properties['DESCRIP'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_LUGARESDEINTERES_3_0(feature) {
+            switch(String(feature.properties['RUBRO'])) {
+                case 'MUSEO':
+                    return {
+                pane: 'pane_LUGARESDEINTERES_3',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/icono morado.svg',
+            iconSize: [76.0, 76.0]
+        }),
+            }
+                    break;
+                case 'TURISMO':
+                    return {
+                pane: 'pane_LUGARESDEINTERES_3',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/UBIC.svg',
+            iconSize: [76.0, 76.0]
+        }),
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_LUGARESDEINTERES_3');
+        map.getPane('pane_LUGARESDEINTERES_3').style.zIndex = 403;
+        map.getPane('pane_LUGARESDEINTERES_3').style['mix-blend-mode'] = 'normal';
+        var layer_LUGARESDEINTERES_3 = new L.geoJson(json_LUGARESDEINTERES_3, {
+            attribution: '',
+            pane: 'pane_LUGARESDEINTERES_3',
+            onEachFeature: pop_LUGARESDEINTERES_3,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_LUGARESDEINTERES_3_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_LUGARESDEINTERES_3);
+        map.addLayer(layer_LUGARESDEINTERES_3);
+        function pop_HOSPEDAJE_4(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                     <tr>\
+                        <th scope="row">RUBRO</th>\
+                        <td>' + (feature.properties['RUBRO'] !== null ? Autolinker.link(String(feature.properties['RUBRO'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>DESCRIP</strong><br />' + (feature.properties['DESCRIP'] !== null ? Autolinker.link(String(feature.properties['DESCRIP'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_HOSPEDAJE_4_0() {
+            return {
+                pane: 'pane_HOSPEDAJE_4',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/icono azul.svg',
+            iconSize: [76.0, 76.0]
+        }),
+            }
+        }
+        map.createPane('pane_HOSPEDAJE_4');
+        map.getPane('pane_HOSPEDAJE_4').style.zIndex = 404;
+        map.getPane('pane_HOSPEDAJE_4').style['mix-blend-mode'] = 'normal';
+        var layer_HOSPEDAJE_4 = new L.geoJson(json_HOSPEDAJE_4, {
+            attribution: '',
+            pane: 'pane_HOSPEDAJE_4',
+            onEachFeature: pop_HOSPEDAJE_4,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_HOSPEDAJE_4_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_HOSPEDAJE_4);
+        map.addLayer(layer_HOSPEDAJE_4);
+        function pop_ALIMENTACION_5(feature, layer) {
             layer.on({
                 mouseout: function(e) {
                     for (i in e.target._eventParents) {
@@ -304,51 +363,241 @@
                         <td colspan="2">' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2"><strong>RUBRO</strong><br />' + (feature.properties['RUBRO'] !== null ? Autolinker.link(String(feature.properties['RUBRO'])) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['RUBRO'] !== null ? Autolinker.link(String(feature.properties['RUBRO'])) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">DESCRIP</th>\
-                        <td>' + (feature.properties['DESCRIP'] !== null ? Autolinker.link(String(feature.properties['DESCRIP'])) : '') + '</td>\
+                        <td colspan="2"><strong>DESCRIPCIO</strong><br />' + (feature.properties['DESCRIPCIO'] !== null ? Autolinker.link(String(feature.properties['DESCRIPCIO'])) : '') + '</td>\
                     </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_PTOSTURISTICOS_4_0() {
+        function style_ALIMENTACION_5_0() {
             return {
-                pane: 'pane_PTOSTURISTICOS_4',
-                radius: 8.0,
-                opacity: 1,
-                color: 'rgba(61,128,53,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 2.0,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(84,176,74,1.0)',
+                pane: 'pane_ALIMENTACION_5',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/icono naranja.svg',
+            iconSize: [76.0, 76.0]
+        }),
             }
         }
-        map.createPane('pane_PTOSTURISTICOS_4');
-        map.getPane('pane_PTOSTURISTICOS_4').style.zIndex = 404;
-        map.getPane('pane_PTOSTURISTICOS_4').style['mix-blend-mode'] = 'normal';
-        var layer_PTOSTURISTICOS_4 = new L.geoJson(json_PTOSTURISTICOS_4, {
+        map.createPane('pane_ALIMENTACION_5');
+        map.getPane('pane_ALIMENTACION_5').style.zIndex = 405;
+        map.getPane('pane_ALIMENTACION_5').style['mix-blend-mode'] = 'normal';
+        var layer_ALIMENTACION_5 = new L.geoJson(json_ALIMENTACION_5, {
             attribution: '',
-            pane: 'pane_PTOSTURISTICOS_4',
-            onEachFeature: pop_PTOSTURISTICOS_4,
+            pane: 'pane_ALIMENTACION_5',
+            onEachFeature: pop_ALIMENTACION_5,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.circleMarker(latlng, style_PTOSTURISTICOS_4_0(feature));
+                return L.marker(latlng, style_ALIMENTACION_5_0(feature));
             },
         });
-        bounds_group.addLayer(layer_PTOSTURISTICOS_4);
-        map.addLayer(layer_PTOSTURISTICOS_4);
+        bounds_group.addLayer(layer_ALIMENTACION_5);
+        map.addLayer(layer_ALIMENTACION_5);
+        map.on("zoomend", function(e) {
+            if (map.getZoom() <= 19 && map.getZoom() >= 9) {
+                map.addLayer(layer_PLAYAS_2);
+            } else if (map.getZoom() > 19 || map.getZoom() < 9) {
+                map.removeLayer(layer_PLAYAS_2);
+            }
+            if (map.getZoom() <= 19 && map.getZoom() >= 12) {
+                map.addLayer(layer_LUGARESDEINTERES_3);
+            } else if (map.getZoom() > 19 || map.getZoom() < 12) {
+                map.removeLayer(layer_LUGARESDEINTERES_3);
+            }
+            if (map.getZoom() <= 19 && map.getZoom() >= 14) {
+                map.addLayer(layer_HOSPEDAJE_4);
+            } else if (map.getZoom() > 19 || map.getZoom() < 14) {
+                map.removeLayer(layer_HOSPEDAJE_4);
+            }
+            if (map.getZoom() <= 19 && map.getZoom() >= 14) {
+                map.addLayer(layer_ALIMENTACION_5);
+            } else if (map.getZoom() > 19 || map.getZoom() < 14) {
+                map.removeLayer(layer_ALIMENTACION_5);
+            }
+        });
+            if (map.getZoom() <= 19 && map.getZoom() >= 9) {
+                map.addLayer(layer_PLAYAS_2);
+            } else if (map.getZoom() > 19 || map.getZoom() < 9) {
+                map.removeLayer(layer_PLAYAS_2);
+            }
+            if (map.getZoom() <= 19 && map.getZoom() >= 12) {
+                map.addLayer(layer_LUGARESDEINTERES_3);
+            } else if (map.getZoom() > 19 || map.getZoom() < 12) {
+                map.removeLayer(layer_LUGARESDEINTERES_3);
+            }
+            if (map.getZoom() <= 19 && map.getZoom() >= 14) {
+                map.addLayer(layer_HOSPEDAJE_4);
+            } else if (map.getZoom() > 19 || map.getZoom() < 14) {
+                map.removeLayer(layer_HOSPEDAJE_4);
+            }
+            if (map.getZoom() <= 19 && map.getZoom() >= 14) {
+                map.addLayer(layer_ALIMENTACION_5);
+            } else if (map.getZoom() > 19 || map.getZoom() < 14) {
+                map.removeLayer(layer_ALIMENTACION_5);
+            }
         var baseMaps = {};
-        L.control.layers(baseMaps,{'<img src="legend/PTOSTURISTICOS_4.png" /> PTOS TURISTICOS': layer_PTOSTURISTICOS_4,'<img src="legend/via_ferrea_3.png" /> via_ferrea': layer_via_ferrea_3,'DIST_ILO<br /><table><tr><td style="text-align: center;"><img src="legend/DIST_ILO_2_ELALGARROBAL0.png" /></td><td>EL ALGARROBAL</td></tr><tr><td style="text-align: center;"><img src="legend/DIST_ILO_2_ILO1.png" /></td><td>ILO</td></tr><tr><td style="text-align: center;"><img src="legend/DIST_ILO_2_PACOCHA2.png" /></td><td>PACOCHA</td></tr><tr><td style="text-align: center;"><img src="legend/DIST_ILO_2_3.png" /></td><td></td></tr></table>': layer_DIST_ILO_2,'<img src="legend/PROVINCIA_ILO_1.png" /> PROVINCIA_ILO': layer_PROVINCIA_ILO_1,'<img src="legend/dpto_moquegua_0.png" /> dpto_moquegua': layer_dpto_moquegua_0,}).addTo(map);L.control.scale({position: 'bottomleft', maxWidth: 100, metric: true, imperial: false, updateWhenIdle: false}).addTo(map);
+        L.control.layers(baseMaps,{'<img src="legend/ALIMENTACION_5.png" /> ALIMENTACION': layer_ALIMENTACION_5,'<img src="legend/HOSPEDAJE_4.png" /> HOSPEDAJE': layer_HOSPEDAJE_4,'LUGARES DE INTERES<br /><table><tr><td style="text-align: center;"><img src="legend/LUGARESDEINTERES_3_MUSEO0.png" /></td><td>MUSEO</td></tr><tr><td style="text-align: center;"><img src="legend/LUGARESDEINTERES_3_TURISMO1.png" /></td><td>TURISMO</td></tr></table>': layer_LUGARESDEINTERES_3,'<img src="legend/PLAYAS_2.png" /> PLAYAS': layer_PLAYAS_2,'DIST_ILO<br /><table><tr><td style="text-align: center;"><img src="legend/DIST_ILO_1_ELALGARROBAL0.png" /></td><td>EL ALGARROBAL</td></tr><tr><td style="text-align: center;"><img src="legend/DIST_ILO_1_ILO1.png" /></td><td>ILO</td></tr><tr><td style="text-align: center;"><img src="legend/DIST_ILO_1_PACOCHA2.png" /></td><td>PACOCHA</td></tr></table>': layer_DIST_ILO_1,'<img src="legend/dpto_moquegua_0.png" /> dpto_moquegua': layer_dpto_moquegua_0,}).addTo(map);L.control.scale({position: 'bottomleft', maxWidth: 100, metric: true, imperial: false, updateWhenIdle: false}).addTo(map);
+        map.on("zoomend", function(){
+
+                if (map.hasLayer(layer_PLAYAS_2)) {
+                    if (map.getZoom() <= 9 && map.getZoom() >= 19) {
+                        layer_PLAYAS_2.eachLayer(function (layer) {
+                            layer.openTooltip();
+                        });
+                    } else {
+                        layer_PLAYAS_2.eachLayer(function (layer) {
+                            layer.closeTooltip();
+                        });
+                    }
+                }
+                if (map.hasLayer(layer_LUGARESDEINTERES_3)) {
+                    if (map.getZoom() <= 12 && map.getZoom() >= 19) {
+                        layer_LUGARESDEINTERES_3.eachLayer(function (layer) {
+                            layer.openTooltip();
+                        });
+                    } else {
+                        layer_LUGARESDEINTERES_3.eachLayer(function (layer) {
+                            layer.closeTooltip();
+                        });
+                    }
+                }
+                if (map.hasLayer(layer_HOSPEDAJE_4)) {
+                    if (map.getZoom() <= 14 && map.getZoom() >= 19) {
+                        layer_HOSPEDAJE_4.eachLayer(function (layer) {
+                            layer.openTooltip();
+                        });
+                    } else {
+                        layer_HOSPEDAJE_4.eachLayer(function (layer) {
+                            layer.closeTooltip();
+                        });
+                    }
+                }
+                if (map.hasLayer(layer_ALIMENTACION_5)) {
+                    if (map.getZoom() <= 14 && map.getZoom() >= 19) {
+                        layer_ALIMENTACION_5.eachLayer(function (layer) {
+                            layer.openTooltip();
+                        });
+                    } else {
+                        layer_ALIMENTACION_5.eachLayer(function (layer) {
+                            layer.closeTooltip();
+                        });
+                    }
+                }
+        });
         setBounds();
+        var i = 0;
+        layer_PLAYAS_2.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['DESCRIP'] !== null?String('<div style="color: #000000; font-size: 8pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['DESCRIP']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_PLAYAS_2'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var i = 0;
+        layer_LUGARESDEINTERES_3.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((label_LUGARESDEINTERES_3_eval_expression(context) !== null?String('<div style="color: #000000; font-size: 10pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + label_LUGARESDEINTERES_3_eval_expression(context)) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_LUGARESDEINTERES_3'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var i = 0;
+        layer_HOSPEDAJE_4.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['DESCRIP'] !== null?String('<div style="color: #000000; font-size: 9pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['DESCRIP']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_HOSPEDAJE_4'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var i = 0;
+        layer_ALIMENTACION_5.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['DESCRIPCIO'] !== null?String('<div style="color: #000000; font-size: 8pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['DESCRIPCIO']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_ALIMENTACION_5'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+                if (map.hasLayer(layer_PLAYAS_2)) {
+                    if (map.getZoom() <= 9 && map.getZoom() >= 19) {
+                        layer_PLAYAS_2.eachLayer(function (layer) {
+                            layer.openTooltip();
+                        });
+                    } else {
+                        layer_PLAYAS_2.eachLayer(function (layer) {
+                            layer.closeTooltip();
+                        });
+                    }
+                }
+                if (map.hasLayer(layer_LUGARESDEINTERES_3)) {
+                    if (map.getZoom() <= 12 && map.getZoom() >= 19) {
+                        layer_LUGARESDEINTERES_3.eachLayer(function (layer) {
+                            layer.openTooltip();
+                        });
+                    } else {
+                        layer_LUGARESDEINTERES_3.eachLayer(function (layer) {
+                            layer.closeTooltip();
+                        });
+                    }
+                }
+                if (map.hasLayer(layer_HOSPEDAJE_4)) {
+                    if (map.getZoom() <= 14 && map.getZoom() >= 19) {
+                        layer_HOSPEDAJE_4.eachLayer(function (layer) {
+                            layer.openTooltip();
+                        });
+                    } else {
+                        layer_HOSPEDAJE_4.eachLayer(function (layer) {
+                            layer.closeTooltip();
+                        });
+                    }
+                }
+                if (map.hasLayer(layer_ALIMENTACION_5)) {
+                    if (map.getZoom() <= 14 && map.getZoom() >= 19) {
+                        layer_ALIMENTACION_5.eachLayer(function (layer) {
+                            layer.openTooltip();
+                        });
+                    } else {
+                        layer_ALIMENTACION_5.eachLayer(function (layer) {
+                            layer.closeTooltip();
+                        });
+                    }
+                }
+        resetLabels([layer_PLAYAS_2,layer_LUGARESDEINTERES_3,layer_HOSPEDAJE_4,layer_ALIMENTACION_5]);
+        map.on("zoomend", function(){
+            resetLabels([layer_PLAYAS_2,layer_LUGARESDEINTERES_3,layer_HOSPEDAJE_4,layer_ALIMENTACION_5]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_PLAYAS_2,layer_LUGARESDEINTERES_3,layer_HOSPEDAJE_4,layer_ALIMENTACION_5]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_PLAYAS_2,layer_LUGARESDEINTERES_3,layer_HOSPEDAJE_4,layer_ALIMENTACION_5]);
+        });
         </script>
     </body>
 </html>
